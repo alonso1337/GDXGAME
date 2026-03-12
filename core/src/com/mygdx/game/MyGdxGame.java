@@ -1,38 +1,36 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class 	MyGdxGame extends ApplicationAdapter {
+public class MyGdxGame extends Game {
+	ScreenGame screenGame;
+	public OrthographicCamera camera;
+	public static final int SCR_WIDTH = 1280;
+	public static final int SCR_HEIGHT = 720;
 	SpriteBatch batch;
-	int birdX = 0;
-	int birdY = 0;
-	int birdSpeed = 5;
 
-	Texture birdTexture;
+
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		birdTexture = new Texture("bird0.png");
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
+
+
+		screenGame = new ScreenGame(this);
+		setScreen(screenGame);
 	}
 
-	@Override
-	public void render () {
-		birdX += birdSpeed;
-		birdY += birdSpeed;
 
-		ScreenUtils.clear(0, 1, 1, 0);
-		batch.begin();
-		batch.draw(birdTexture, birdX, birdY);
-		batch.end();
-	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		birdTexture.dispose();
 	}
 }
