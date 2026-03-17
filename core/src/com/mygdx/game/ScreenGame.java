@@ -1,39 +1,38 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class ScreenGame implements Screen {
     MyGdxGame myGdxGame;
-    Texture birdTexture;
-    int birdX = 0;
-    int birdY = 0;
-    int birdSpeed = 5;
-
+    Bird bird;
 
     ScreenGame(MyGdxGame myGdxGame) {
         this.myGdxGame = myGdxGame;
-        birdTexture = new Texture("bird0.png");
+        this.bird = new Bird(0,MyGdxGame.SCR_HEIGHT/2,    new Texture("birdTiles/bird0.png"),5);
     }
+
     @Override
     public void show() {
 
     }
 
     @Override
-    public void render(float delta){
-    birdX += birdSpeed;
-    birdY += birdSpeed;
+    public void render(float delta) {
+        if (Gdx.input.justTouched()) {
+            bird.onClick();
+        }
 
 
-   ScreenUtils.clear(1, 0, 0, 1);
-   myGdxGame.camera.update();
-   myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
-   myGdxGame.batch.begin();
-   myGdxGame.batch.draw(birdTexture, birdX, birdY);
-   myGdxGame.batch.end();
-}
+        ScreenUtils.clear(1, 0, 0, 1);
+        myGdxGame.camera.update();
+        myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
+        myGdxGame.batch.begin();
+        bird.draw(myGdxGame.batch);
+        myGdxGame.batch.end();
+    }
 
     @Override
     public void resize(int width, int height) {
