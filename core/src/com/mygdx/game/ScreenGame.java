@@ -24,6 +24,7 @@ public class ScreenGame implements Screen {
         if (Gdx.input.justTouched()) {
             bird.onClick();
         }
+        bird.fly();
 
 
         ScreenUtils.clear(1, 0, 0, 1);
