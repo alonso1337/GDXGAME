@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 public class Bird {
     int x, y;
     int speed;
+    float vY = 0;
+    float gravity = -0.5f;
     Texture texture;
-    int jumpHeight;
+    int jumpHeight = 10;
     final int maxHeightOfJump = 200;
     boolean jump;
     int frameCounter =  0;
@@ -33,22 +35,24 @@ public class Bird {
     }
 
     public void dispose() {
-        texture.dispose();
+        for (Texture texture : framesArray) {
+            texture.dispose();
+        }
     }
 
     void onClick() {
-        jump = true;
-        jumpHeight = maxHeightOfJump + y;
+        if (vY < 0) {
+            vY = jumpHeight;
+        } else {
+            vY += jumpHeight;
+        }
     }
     void fly() {
-        if (y >= jumpHeight) {
-            jump = false;
-        }
+        vY += gravity;  // Гравитация постоянно уменьшает скорость
+        y += vY;  // Изменяем координату Y на значение скорости
 
-        if (jump) {
-            y += speed;
-        } else {
-            y -= speed;
+        if (y < 0) {
+            y = 0;
         }
     }
     void draw(Batch batch) {
@@ -56,4 +60,5 @@ public class Bird {
         batch.draw(framesArray[frameCounter / frameMultiplier], x, y, width, height);
         if (frameCounter++ == framesArray.length * frameMultiplier - 1) frameCounter = 0;
     }
+
 }

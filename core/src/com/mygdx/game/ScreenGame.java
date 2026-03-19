@@ -8,10 +8,20 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class ScreenGame implements Screen {
     MyGdxGame myGdxGame;
     Bird bird;
+    int tubeCount = 3;
+    Tube[] tubes;
+
+    public void initTubes(){
+        tubes = new Tube[tubeCount];
+        for (int i = 0; i < tubeCount; i++) {
+            tubes[i] = new Tube(tubeCount, i);
+        }
+    }
 
     ScreenGame(MyGdxGame myGdxGame) {
         this.myGdxGame = myGdxGame;
         this.bird = new Bird(0,MyGdxGame.SCR_HEIGHT/2,    new Texture("birdTiles/bird0.png"),5);
+        initTubes();
     }
 
     @Override
@@ -25,12 +35,16 @@ public class ScreenGame implements Screen {
             bird.onClick();
         }
         bird.fly();
-
+        for(Tube next: tubes){
+            next.move();
+        }
 
         ScreenUtils.clear(1, 0, 0, 1);
         myGdxGame.camera.update();
         myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
         myGdxGame.batch.begin();
+        for (Tube tube : tubes) tube.move();
+        for (Tube tube : tubes) tube.draw(myGdxGame.batch);
         bird.draw(myGdxGame.batch);
         myGdxGame.batch.end();
     }
