@@ -17,6 +17,11 @@ public class Bird {
     int width;
     int height;
 
+    public boolean isInField() {
+        if (y + height < 0) return false;
+        if (y > MyGdxGame.SCR_HEIGHT) return false;
+        return true;
+    }
 
 
     public Bird(int x, int y, Texture texture, int speed){
@@ -51,9 +56,7 @@ public class Bird {
         vY += gravity;  // Гравитация постоянно уменьшает скорость
         y += vY;  // Изменяем координату Y на значение скорости
 
-        if (y < 0) {
-            y = 0;
-        }
+
     }
     void draw(Batch batch) {
         int frameMultiplier = 10;

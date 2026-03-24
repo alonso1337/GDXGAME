@@ -20,9 +20,19 @@ public class Tube {
     int x;
     int distanceBetweenTubes;
     int speed = 6;
+    boolean isPointReceived;
 
     Texture textureUpperTube;
     Texture textureDownTube;
+
+    public boolean isHit(Bird bird) {
+        if (bird.y <= gapY - gapHeight / 2 && bird.x + bird.width >= x && bird.x <= x)
+            return true;
+        if (bird.y + bird.height >= gapY + gapHeight / 2 && bird.x + bird.width >= x && bird.x <= x)
+            return true;
+
+        return false;
+    }
 
     public Tube(int tubeCount, int tubeIdx) {
 
@@ -45,9 +55,18 @@ public class Tube {
     void move() {
         x -= speed;
         if (x < -width) {
+            isPointReceived = false;
             x = SCR_WIDTH + distanceBetweenTubes;
             gapY = gapHeight / 2 + padding + r.nextInt(SCR_HEIGHT - 2 * (padding + gapHeight / 2));
         }
+    }
+
+    public boolean needAddPoint(Bird bird) {
+        return bird.x > x + width && !isPointReceived;
+    }
+
+    public void setPointReceived() {
+        isPointReceived = true;
     }
 
 
