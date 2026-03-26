@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package characters;
 
 import static com.mygdx.game.MyGdxGame.SCR_HEIGHT;
 import static com.mygdx.game.MyGdxGame.SCR_WIDTH;
@@ -14,13 +14,13 @@ public class Tube {
     int padding = 100;
     int height = 500;
     int width = 200;
-    int gapHeight = 300;
+    int gapHeight = 400;
     Random r = new Random();
-    int gapY = gapHeight / 2 + padding + r.nextInt(SCR_HEIGHT - 2 * (padding + gapHeight / 2));
+    int gapY;
     int x;
     int distanceBetweenTubes;
-    int speed = 6;
-    boolean isPointReceived;
+    int speed = 5;
+    public boolean isPointReceived;
 
     Texture textureUpperTube;
     Texture textureDownTube;
@@ -44,7 +44,7 @@ public class Tube {
         textureUpperTube = new Texture("tubes/tube_flipped.png");
         textureDownTube = new Texture("tubes/tube.png");
     }
-    void draw(Batch batch) {
+    public void draw(Batch batch) {
         batch.draw(textureUpperTube, x, gapY + gapHeight / 2, width, height);
         batch.draw(textureDownTube, x, gapY - gapHeight / 2 - height, width, height);
     }
@@ -52,7 +52,7 @@ public class Tube {
         textureDownTube.dispose();
         textureUpperTube.dispose();
     }
-    void move() {
+    public void move() {
         x -= speed;
         if (x < -width) {
             isPointReceived = false;
@@ -62,12 +62,11 @@ public class Tube {
     }
 
     public boolean needAddPoint(Bird bird) {
-        return bird.x > x + width && !isPointReceived;
+        boolean b = bird.x >= x + width - speed;
+        if(b){
+            System.out.println("pass");
+        }
+        return b && !isPointReceived;
     }
-
-    public void setPointReceived() {
-        isPointReceived = true;
-    }
-
 
 }

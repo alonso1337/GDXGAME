@@ -1,7 +1,8 @@
-package com.mygdx.game;
+package characters;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.mygdx.game.MyGdxGame;
 
 public class Bird {
     int x, y;
@@ -45,20 +46,20 @@ public class Bird {
         }
     }
 
-    void onClick() {
+    public void onClick() {
         if (vY < 0) {
             vY = jumpHeight;
         } else {
             vY += jumpHeight;
         }
     }
-    void fly() {
+    public void fly() {
         vY += gravity;  // Гравитация постоянно уменьшает скорость
         y += vY;  // Изменяем координату Y на значение скорости
 
 
     }
-    void draw(Batch batch) {
+    public void draw(Batch batch) {
         int frameMultiplier = 10;
         batch.draw(framesArray[frameCounter / frameMultiplier], x, y, width, height);
         if (frameCounter++ == framesArray.length * frameMultiplier - 1) frameCounter = 0;
