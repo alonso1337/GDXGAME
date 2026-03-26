@@ -5,10 +5,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+
+
 public class ScreenGame implements Screen {
     MyGdxGame myGdxGame;
     boolean isGameOver;
     Bird bird;
+    PointCounter pointCounter;
+    final int pointCounterMarginTop = 60;
+    final int pointCounterMarginRight = 400;
+
     int tubeCount = 3;
     Tube[] tubes;
     int gamePoints = 0;
@@ -28,6 +34,7 @@ public class ScreenGame implements Screen {
 
     @Override
     public void show() {
+        pointCounter = new PointCounter(MyGdxGame.SCR_WIDTH - pointCounterMarginRight, MyGdxGame.SCR_WIDTH - pointCounterMarginTop);
         isGameOver = false;
         int gamePoints = 0;
     }
@@ -73,6 +80,7 @@ public class ScreenGame implements Screen {
         for (Tube tube : tubes) tube.draw(myGdxGame.batch);
         bird.draw(myGdxGame.batch);
         myGdxGame.batch.end();
+        pointCounter.draw(myGdxGame.batch, gamePoints);
     }
 
     @Override
