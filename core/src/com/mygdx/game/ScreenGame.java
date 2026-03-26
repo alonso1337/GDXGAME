@@ -12,8 +12,8 @@ public class ScreenGame implements Screen {
     boolean isGameOver;
     Bird bird;
     PointCounter pointCounter;
-    final int pointCounterMarginTop = 60;
-    final int pointCounterMarginRight = 400;
+    final int pointCounterMarginTop = 400;
+    final int pointCounterMarginRight = 60;
 
     int tubeCount = 3;
     Tube[] tubes;
@@ -79,8 +79,8 @@ public class ScreenGame implements Screen {
         for (Tube tube : tubes) tube.move();
         for (Tube tube : tubes) tube.draw(myGdxGame.batch);
         bird.draw(myGdxGame.batch);
-        myGdxGame.batch.end();
         pointCounter.draw(myGdxGame.batch, gamePoints);
+        myGdxGame.batch.end();
     }
 
     @Override
