@@ -23,13 +23,17 @@ public class Bird {
         if (y > MyGdxGame.SCR_HEIGHT) return false;
         return true;
     }
+    public void setY(int y) {
+        this.y = y;
+    }
 
 
-    public Bird(int x, int y, Texture texture, int speed){
+
+    public Bird(int x, int y, Texture texture){
         this.x = x;
         this.y = y;
         this.texture = texture;
-        this.speed = speed;
+        //this.speed = speed;
         this.width = 250;
         this.height = 200;
         framesArray = new Texture[]{
