@@ -1,4 +1,4 @@
-package characters;
+package com.mygdx.game.characters;
 
 import static com.mygdx.game.MyGdxGame.SCR_HEIGHT;
 import static com.mygdx.game.MyGdxGame.SCR_WIDTH;

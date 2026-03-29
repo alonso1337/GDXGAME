@@ -4,8 +4,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import screens.ScreenGame;
-import screens.ScreenRestart;
+import com.mygdx.game.screens.ScreenGame;
+import com.mygdx.game.screens.ScreenRestart;
 
 public class MyGdxGame extends Game {
 	ScreenGame screenGame;

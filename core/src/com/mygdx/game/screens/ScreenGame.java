@@ -1,16 +1,17 @@
-package screens;
+package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.MyGdxGame;
 
-import characters.Bird;
-import characters.Tube;
-import components.MovingBackground;
-import components.PointCounter;
+import com.mygdx.game.characters.Bird;
+import com.mygdx.game.characters.Tube;
+import com.mygdx.game.components.MovingBackground;
+import com.mygdx.game.components.PointCounter;
+import com.mygdx.game.components.TextButton;
 
 
 public class ScreenGame implements Screen {
@@ -19,7 +20,7 @@ public class ScreenGame implements Screen {
     Bird bird;
     Texture birdTexture;
     PointCounter pointCounter;
-    MovingBackground background = new MovingBackground("backGround/game_bg.png");
+    MovingBackground background;
     TextButton buttonRestart;
 
     final int pointCounterMarginTop = 40;
@@ -29,7 +30,7 @@ public class ScreenGame implements Screen {
     Tube[] tubes;
     int gamePoints;
 
-    public void initTubes(){
+    public void initTubes() {
         tubes = new Tube[tubeCount];
         for (int i = 0; i < tubeCount; i++) {
             tubes[i] = new Tube(tubeCount, i);
@@ -43,6 +44,7 @@ public class ScreenGame implements Screen {
         bird = new Bird(200, MyGdxGame.SCR_HEIGHT / 2, birdTexture);
         initTubes();
     }
+
     @Override
     public void show() {
         gamePoints = 0;
@@ -67,56 +69,58 @@ public class ScreenGame implements Screen {
                     System.out.println(gamePoints);
                 }
             }
-
-            if (Gdx.input.justTouched()) {
-                bird.onClick();
-            }
-
-            bird.fly();
-            background.move();
-            if (!bird.isInField()) {
-                System.out.println("not in field");
-                isGameOver = true;
-            }
-
-
-            ScreenUtils.clear(1, 0, 0, 1);
-            myGdxGame.camera.update();
-            myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
-            myGdxGame.batch.begin();
-            background.draw(myGdxGame.batch);
-            buttonRestart.draw(myGdxGame.batch);
-            for (Tube tube : tubes) tube.move();
-            for (Tube tube : tubes) tube.draw(myGdxGame.batch);
-            bird.draw(myGdxGame.batch);
-            pointCounter.draw(myGdxGame.batch, gamePoints);
-            myGdxGame.batch.end();
-        }}
-
-        @Override
-        public void resize ( int width, int height){
-
         }
 
-        @Override
-        public void pause () {
-
+        if (Gdx.input.justTouched()) {
+            bird.onClick();
         }
 
-        @Override
-        public void resume () {
-
+        bird.fly();
+        background.move();
+        if (!bird.isInField()) {
+            System.out.println("not in field");
+            isGameOver = true;
         }
 
-        @Override
-        public void hide () {
 
-        }
+        ScreenUtils.clear(1, 0, 0, 1);
+        myGdxGame.camera.update();
+        myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
+        myGdxGame.batch.begin();
+        background.draw(myGdxGame.batch);
+        buttonRestart.draw(myGdxGame.batch);
+        for (Tube tube : tubes) tube.move();
+        for (Tube tube : tubes) tube.draw(myGdxGame.batch);
+        bird.draw(myGdxGame.batch);
+        pointCounter.draw(myGdxGame.batch, gamePoints);
+        myGdxGame.batch.end();
 
-        @Override
-        public void dispose () {
-            bird.dispose();
-            background.dispose();
+    }
 
-        }
-        }
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+        bird.dispose();
+        background.dispose();
+
+    }
+}
