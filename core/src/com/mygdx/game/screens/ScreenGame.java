@@ -28,7 +28,7 @@ public class ScreenGame implements Screen {
 
     int tubeCount = 3;
     Tube[] tubes;
-    int gamePoints;
+    static int gamePoints;
 
     public void initTubes() {
         tubes = new Tube[tubeCount];
@@ -43,6 +43,7 @@ public class ScreenGame implements Screen {
         birdTexture = new Texture("birdTiles/bird0.png");
         bird = new Bird(200, MyGdxGame.SCR_HEIGHT / 2, birdTexture);
         initTubes();
+        pointCounter = new PointCounter(MyGdxGame.SCR_WIDTH - pointCounterMarginRight, MyGdxGame.SCR_HEIGHT - pointCounterMarginTop);
     }
 
     @Override
@@ -57,10 +58,10 @@ public class ScreenGame implements Screen {
     public void render(float delta) {
         if (isGameOver) {
             myGdxGame.screenRestart.gamePoints = gamePoints;
-            myGdxGame.setScreen(new ScreenRestart(myGdxGame));
+            myGdxGame.setScreen(new ScreenRestart(myGdxGame));}
             for (Tube tube : tubes) {
                 tube.move();
-                if (tube.isHit(bird)) {
+               if (tube.isHit(bird)) {
                     System.out.println("дэбилxxx");
                     isGameOver = true;
                 } else if (tube.needAddPoint(bird)) {
@@ -69,7 +70,7 @@ public class ScreenGame implements Screen {
                     System.out.println(gamePoints);
                 }
             }
-        }
+
 
         if (Gdx.input.justTouched()) {
             bird.onClick();
@@ -88,7 +89,6 @@ public class ScreenGame implements Screen {
         myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
         myGdxGame.batch.begin();
         background.draw(myGdxGame.batch);
-        buttonRestart.draw(myGdxGame.batch);
         for (Tube tube : tubes) tube.move();
         for (Tube tube : tubes) tube.draw(myGdxGame.batch);
         bird.draw(myGdxGame.batch);

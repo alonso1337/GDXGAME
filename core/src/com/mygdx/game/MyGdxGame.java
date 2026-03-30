@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.mygdx.game.screens.ScreenGame;
+import com.mygdx.game.screens.ScreenMenu;
 import com.mygdx.game.screens.ScreenRestart;
 
 public class MyGdxGame extends Game {
@@ -14,6 +15,7 @@ public class MyGdxGame extends Game {
 	public static final int SCR_HEIGHT = 720;
 	public SpriteBatch batch;
 	public ScreenRestart screenRestart;
+	ScreenMenu screenMenu;
 
 	@Override
 	public void create () {
@@ -22,7 +24,8 @@ public class MyGdxGame extends Game {
 		camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
 		screenRestart = new ScreenRestart(this);
 		screenGame = new ScreenGame(this);
-		setScreen(screenGame);
+		screenMenu = new ScreenMenu(this);
+		setScreen(screenMenu);
 	}
 	@Override
 	public void dispose () {
