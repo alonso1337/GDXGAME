@@ -2,6 +2,7 @@ package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -13,22 +14,29 @@ import com.mygdx.game.components.MovingBackground;
 import com.mygdx.game.components.PointCounter;
 import com.mygdx.game.components.TextButton;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
 
 public class ScreenGame implements Screen {
     MyGdxGame myGdxGame;
     boolean isGameOver;
+    FileHandle file = Gdx.files.local("assets/record.txt");
     Bird bird;
     Texture birdTexture;
     PointCounter pointCounter;
     MovingBackground background;
-    TextButton buttonRestart;
 
     final int pointCounterMarginTop = 40;
     final int pointCounterMarginRight = 400;
 
+    BufferedReader reader = new BufferedReader(file.reader());
+    String record  = null;
+
+
     int tubeCount = 3;
     Tube[] tubes;
-    static int gamePoints;
+    public static int gamePoints;
 
     public void initTubes() {
         tubes = new Tube[tubeCount];
@@ -54,11 +62,13 @@ public class ScreenGame implements Screen {
         initTubes();
     }
 
+
     @Override
     public void render(float delta) {
         if (isGameOver) {
             myGdxGame.screenRestart.gamePoints = gamePoints;
-            myGdxGame.setScreen(new ScreenRestart(myGdxGame));}
+            myGdxGame.setScreen(new ScreenRestart(myGdxGame));
+        }
             for (Tube tube : tubes) {
                 tube.move();
                if (tube.isHit(bird)) {
@@ -68,6 +78,15 @@ public class ScreenGame implements Screen {
                     tube.isPointReceived = true;
                     gamePoints += 1;
                     System.out.println(gamePoints);
+                   try {
+                       record = reader.readLine();
+                   } catch (IOException e) {
+                       throw new RuntimeException(e);
+                   }
+                    if(gamePoints > Integer.parseInt(record) ) {
+                        file.writeString(String.valueOf(gamePoints), false);
+                    }
+                    
                 }
             }
 
@@ -92,7 +111,7 @@ public class ScreenGame implements Screen {
         for (Tube tube : tubes) tube.move();
         for (Tube tube : tubes) tube.draw(myGdxGame.batch);
         bird.draw(myGdxGame.batch);
-        pointCounter.draw(myGdxGame.batch, gamePoints);
+        pointCounter.draw(myGdxGame.batch, gamePoints, "Count");
         myGdxGame.batch.end();
 
     }

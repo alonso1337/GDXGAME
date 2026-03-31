@@ -18,8 +18,8 @@ public class PointCounter {
         font.setColor(Color.WHITE);
     }
 
-    public void draw(Batch batch, int countOfPoints) {
-        font.draw(batch, "Count: " + countOfPoints, x, y);
+    public void draw(Batch batch, int countOfPoints, String text) {
+        font.draw(batch,text + ": " + countOfPoints, x, y);
     }
 
     void dispose() {

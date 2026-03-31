@@ -63,9 +63,7 @@ public class Tube {
 
     public boolean needAddPoint(Bird bird) {
         boolean b = bird.x >= x + width - speed;
-        if(b){
-            System.out.println("pass");
-        }
+
         return b && !isPointReceived;
     }
 

@@ -1,8 +1,12 @@
 package com.mygdx.game.screens;
 
 
+
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.MyGdxGame;
@@ -10,9 +14,18 @@ import com.mygdx.game.components.MovingBackground;
 import com.mygdx.game.components.PointCounter;
 import com.mygdx.game.components.TextButton;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
 public class ScreenMenu implements Screen {
     MyGdxGame myGdxGame;
     MovingBackground background;
+    FileHandle file = Gdx.files.local("assets/record.txt");
+    BufferedReader reader = new BufferedReader(file.reader());
+    PointCounter recordPoint = new PointCounter(800, 350);
+    String record  = null;
+
+
 
 
     TextButton buttonStart;
@@ -41,8 +54,13 @@ public class ScreenMenu implements Screen {
     }
 
     @Override
-    public void show() {
-
+    public void show() {;
+        try {
+            record = reader.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(record);
     }
 
     @Override
@@ -63,6 +81,7 @@ public class ScreenMenu implements Screen {
         background.draw(myGdxGame.batch);
         buttonStart.draw(myGdxGame.batch);
         buttonExit.draw(myGdxGame.batch);
+        recordPoint.draw(myGdxGame.batch, Integer.parseInt(record), "Record");
         myGdxGame.batch.end();
 
 
