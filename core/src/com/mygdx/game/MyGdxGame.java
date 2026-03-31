@@ -9,13 +9,13 @@ import com.mygdx.game.screens.ScreenMenu;
 import com.mygdx.game.screens.ScreenRestart;
 
 public class MyGdxGame extends Game {
-	ScreenGame screenGame;
+	public ScreenGame screenGame;
 	public OrthographicCamera camera;
 	public static final int SCR_WIDTH = 1280;
 	public static final int SCR_HEIGHT = 720;
 	public SpriteBatch batch;
 	public ScreenRestart screenRestart;
-	ScreenMenu screenMenu;
+	public ScreenMenu screenMenu;
 
 	@Override
 	public void create () {
