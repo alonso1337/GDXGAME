@@ -19,7 +19,7 @@ public class Tube {
     int gapY;
     int x;
     int distanceBetweenTubes;
-    int speed = 5;
+    int speed = 8;
     public boolean isPointReceived;
 
     Texture textureUpperTube;
